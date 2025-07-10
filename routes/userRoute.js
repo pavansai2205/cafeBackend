@@ -7,6 +7,7 @@ import {
   updateUser,
   deleteUser,
   profile,
+  updateProfile,
 } from "../controllers/userController.js";
 
 const Router = express.Router();
@@ -22,5 +23,7 @@ Router.patch("/:id", authenticate, authorize("admin"), updateUser);
 Router.delete("/:id", authenticate, authorize("admin"), deleteUser);
 
 Router.get("/:id/profile", authenticate, profile);
+
+Router.patch("/:id/profile",authenticate,updateProfile);
 
 export default Router;

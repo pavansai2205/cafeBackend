@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 import userModel from "../models/userModel.js";
 
 const SECRET = "something";
@@ -12,7 +12,7 @@ const register = async (req, res) => {
       lastName,
       email,
       password: hashedpwd,
-      status
+      status,
     };
     const result = await userModel.create(user);
     res.status(201).json(result);
@@ -71,7 +71,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-const deleteUser =  async (req, res) => {
+const deleteUser = async (req, res) => {
   try {
     const id = req.params.id;
     const result = await userModel.findByIdAndDelete(id);
@@ -82,17 +82,31 @@ const deleteUser =  async (req, res) => {
   }
 };
 
-const profile = async(req,res)=>{
-    try {
-        const id = req.params.id
-        const result = await userModel.findOne({_id:id});
-        res.status(200).json(result);
-    } catch (err) {
-        console.log(err);
-        res.status(400).json({message:"Something went wrong"})
-    }
-}
+const profile = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await userModel.findOne({ _id: id });
+    res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ message: "Something went wrong" });
+  }
+};
 
-export { register, login, showusers, deleteUser, updateUser, profile };
+const updateProfile = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { firstName, lastName, email } = req.body;
+    const userObj = {
+      firstName,
+      lastName,
+      email,
+    };
+    const result = await userModel.findByIdAndUpdate(id, userObj);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({message: "Something went wrong"})
+  }
+};
 
-
+export { register, login, showusers, deleteUser, updateUser, profile, updateProfile };
