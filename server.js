@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import userRouter from "./routes/userRoute.js";
+import productRouter from "./routes/ProductRoute.js";
 
 dotenv.config();
 const app = express();
@@ -29,3 +30,4 @@ mongoose
   });
 
 app.use("/api/users", userRouter);
+app.use("/api/products",productRouter);
